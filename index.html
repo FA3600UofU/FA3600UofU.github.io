@@ -19,14 +19,14 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-8">
+            <div class="col-6">
                 <h3 id="header">Welcome, you are a college student with a final coming up, how will you prepare?</h3>
                 <p id="instruction">When you are ready, go ahead and click start to get started</p>
                 <div id="buttonHolder">
                     <button onclick="start()">Start</button>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-4" style="margin-left: 200px;">
                 <div id="picture"><img src="Stress.png" alt="stress"></div>
                 <div id="box"></div>
             </div>
@@ -35,25 +35,195 @@
 
 
     <script>
-        var pos = document.getElementById("picture").clientHeight/2;
+        var pos = document.getElementById("picture").clientHeight / 2;
         var index = 0;
         var box = document.getElementById("box");
         box.style.top = pos - 50 + "px";
         box.style.left = -25 + "px";
+        var studied = 0;
+        var cleanRoom = 0;
 
-        function start(){
-            
-            //myMove(-1);
+        function start() {
+            pos = document.getElementById("picture").clientHeight / 2;
+            index = 0;
+            box = document.getElementById("box");
+            box.style.top = pos - 50 + "px";
+            box.style.left = -25 + "px";
+            studied = 0;
+            cleanRoom = 0;
+            myMove(-1);
             var text;
-            if (index == 0)
-            {
-                index++;
-                document.getElementById("header").innerHTML = "Thursday, test is next week.";
-                text = "You just got out of class, the test is next week. You feel like you payed enough attention in class to wing it, but you need to get a good grade to pass the class.\n";
 
-            }
+            index++;
+
+            text = "You just got out of class, the test is next week. You feel like you payed enough attention in class to wing it, but you need to get a good grade to pass the class.<br><br>" +
+                "You are getting out of class and some friends want to hang out, but the final is next week and you haven't hung out in a while. What do you do?";
+
+            setHeaderInstructions("Thursday, test is next week.", text);
+            var option1 = makeLeft("Hang out");
+            var option2 = makeRight("Go home and study");
+            document.getElementById("buttonHolder").innerHTML = option1 + option2;
+
         }
-        
+
+        function game(option) {
+            var text;
+            var header;
+            if (index == 1) {
+                if (option == 0) {
+                    myMove(1);
+                    text = "It is good to hang out with friends, you feel better that your friends have your back.<br><br>";
+                }
+                if (option == 1) {
+                    myMove(-1);
+                    text = "You feel a little upset that you decided to skip out on your friends, but it's good to study.<br><br>";
+                    studied += 15;
+                }
+                header = "Friday, time to get ready for the weekend";
+                text += "You hear about a party going on to celebrate the end of the semester, but you also know some other classmates are going to the library for a group study. Where do you go?";
+                setHeaderInstructions(header, text);
+                var option1 = makeLeft("Group study");
+                var option2 = makeRight("Party time");
+                setButtons(option1, option2);
+            }
+            else if (index == 2) {
+                if (option == 0) {
+                    myMove(-1);
+                    text = "You can party when the final is over. You get some good insight from your other classmates.<br><br>";
+                    studied += 15;
+                }
+                if (option == 1) {
+                    myMove(1);
+                    text = "It is time to party, classes are over and you don't have to deal with them.<br><br>";
+                }
+                header = "Saturday, your day off";
+                text += "Your apartment is a mess, how can you live in such a dump. You need to clean it at some point, but your final is getting closer.";
+                setHeaderInstructions(header, text);
+                var op1 = makeLeft("Clean the apartment");
+                var op2 = makeRight("Study");
+                setButtons(op1, op2);
+            }
+            else if (index == 3) {
+                if (option == 0) {
+                    myMove(1);
+                    text = "You feel better the apartment is clean, maybe this clean environment will help in the long run.<br><br>";
+                    cleanRoom = 15;
+                }
+                if (option == 1) {
+                    myMove(-1);
+                    text = "You can clean later, you need to study.<br><br>";
+                }
+                header = "Sunday, get ready for the week";
+                text += "You are working on doing a better job of planning out your weeks, but the only important thing you need to know is that the test is coming up.";
+                setHeaderInstructions(header, text);
+                var op1 = makeLeft("Study");
+                var op2 = makeRight("Plan for the week");
+                setButtons(op1, op2);
+            }
+            else if (index == 4) {
+                if (option == 0) {
+                    myMove(-1);
+                    text = "All you know is your test is Thursday, that's all you care about.<br><br>";
+                    studied += 15 + cleanRoom;
+                }
+                if (option == 1) {
+                    myMove(1);
+                    text = "Good thing you prepared for the week, you remembered some things coming up<br>Monday: Family get-together<br>Tuesday: Date<br>Wednesday: Teacher help hours<br>Thursday: Final<br><br>";
+                }
+                header = "Monday, Family get-together";
+                text += "You have a family get-together today. You need to go, but you can leave whenever.";
+                setHeaderInstructions(header, text);
+                var op1 = makeLeft("Stay for the whole time");
+                var op2 = makeRight("Leave early to study");
+                setButtons(op1, op2);
+            }
+            else if (index == 5) {
+                if (option == 0) {
+                    myMove(1);
+                    text = "It is nice to spend time with your family, it has been too long.<br><br>";
+                }
+                if (option == 1) {
+                    myMove(-1);
+                    text = "You got some food, and you had to go. Your family understands that you have a lot going on.<br><br>";
+                    studied += 15 + cleanRoom;
+                }
+                header = "Tuesday, date night";
+                text += "You have a date tonight, you have been pushing it off, but you can't push it off any more. You could talk to your date about your coursework, but that might be too weird?";
+                setHeaderInstructions(header, text);
+                var op1 = makeLeft("Share with your date some practice material");
+                var op2 = makeRight("Don't share, that would be too weird");
+                setButtons(op1, op2);
+            }
+            else if (index == 6) {
+                text = "Your date thought you were great, and is totally down for another date.<br><br>";
+                if (option == 0) {
+                    studied += 15;
+                }
+                if (studied >= 60) {
+                    myMove(2);
+                    text += "You feel very confident about your test.<br><br>";
+                }
+                else {
+                    myMove(-2);
+                    text += "You feel a bit stressed for your test tomorrow.<br><br>";
+                }
+                header = "Wednesday, office hours";
+                text += "Your teacher is hosting office hours, but you could just stay home and study.";
+                setHeaderInstructions(header, text);
+                var op1 = makeLeft("Go to office hours");
+                var op2 = makeRight("Stay home to study");
+                setButtons(op1, op2);
+            }
+            else if (index == 7) {
+                if (option == 0) {
+                    text = "You feel better going to office hours, you got a lot cleared up.<br><br>";
+                    studied += 30;
+                }
+                if (option == 1) {
+                    text = "You feel good studying and getting ready for the test<br><br>";
+                    studied += 15 + cleanRoom;
+                }
+                header = "Thursday, test day";
+                text += "It's judgment day. Click the button to take the test.";
+                document.getElementById("buttonHolder").innerHTML = "<button onclick='takeTest()'>Take test</button>";
+            }
+
+            index++;
+        }
+        function takeTest() {
+            var stressNum = pos - document.getElementById("picture").clientHeight / 2;
+            console.log(stressNum);
+            if (studied >= 90 && stressNum >= -100) {
+                text = "You got an A";
+            }
+            else if (studied >= 75) {
+                text = "You got a B";
+            }
+            else if (studied >= 60) {
+                text = "You got a C";
+            }
+            else {
+                text = "You got a D";
+            }
+            header = "Results are in";
+            text += ". It is important to keep a healthy life style.<br><br>Click the button to start over.";
+            setHeaderInstructions(header, text);
+            document.getElementById("buttonHolder").innerHTML = "<button onclick='start()'>Start over</button>";
+        }
+        function makeLeft(text) {
+            return "<button onclick='game(0)' style='margin-right: 50px;'>" + text + "</button>";
+        }
+        function makeRight(text) {
+            return "<button onclick='game(1)'>" + text + "</button>";
+        }
+        function setHeaderInstructions(header, instruction) {
+            document.getElementById("header").innerHTML = header;
+            document.getElementById("instruction").innerHTML = instruction;
+        }
+        function setButtons(option1, option2) {
+            document.getElementById("buttonHolder").innerHTML = option1 + option2;
+        }
+
         function myMove(i) {
             var elem = document.getElementById("box");
             var id = setInterval(frame, 10);
@@ -64,7 +234,7 @@
                 } else {
                     pos += i;
                     time++;
-                    elem.style.top = pos + 'px'; 
+                    elem.style.top = pos + 'px';
                 }
             }
         }
