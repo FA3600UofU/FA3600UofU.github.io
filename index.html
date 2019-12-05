@@ -35,16 +35,17 @@
 
 
     <script>
-        var pos = 0;
+        var pos = document.getElementById("picture").clientHeight/2;
         var index = 0;
 
         function start(){
-            myMove(-1);
+            myMove(0);
             var text;
             if (index == 0)
             {
                 index++;
                 document.getElementById("header").innerHTML = "Thursday, test is next week.";
+                text = "You just got out of class, the test is next week. You feel like you payed enough attention in class to wing it, but you need to get a good grade to pass the class.\n";
 
             }
         }
