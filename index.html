@@ -37,9 +37,13 @@
     <script>
         var pos = document.getElementById("picture").clientHeight/2;
         var index = 0;
+        var box = document.getElementById("box");
+        box.style.top = pos - 50 + "px";
+        box.style.left = -25 + "px";
 
         function start(){
-            myMove(0);
+            
+            //myMove(-1);
             var text;
             if (index == 0)
             {
