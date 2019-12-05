@@ -22,7 +22,9 @@
             <div class="col-8">
                 <h3 id="header">Welcome, you are a college student with a final coming up, how will you prepare?</h3>
                 <p id="instruction">When you are ready, go ahead and click start to get started</p>
-                <div id="buttonHolder"></div>
+                <div id="buttonHolder">
+                    <button onclick="start()">Start</button>
+                </div>
             </div>
             <div class="col-4">
                 <div id="picture"><img src="Stress.png" alt="stress"></div>
@@ -33,6 +35,26 @@
 
 
     <script>
+        var pos = 0;
+
+        function start(){
+            myMove(-2.5);
+        }
+
+        function myMove(i) {
+            var elem = document.getElementById("myAnimation");
+            var id = setInterval(frame, 10);
+            var time = 0;
+            function frame() {
+                if (time == 50) {
+                    clearInterval(id);
+                } else {
+                    pos += i;
+                    time++;
+                    elem.style.top = pos + 'px'; 
+                }
+            }
+        }
 
 
     </script>
